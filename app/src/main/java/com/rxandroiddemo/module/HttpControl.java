@@ -44,7 +44,7 @@ public class HttpControl {
     public static class MyLog implements LoggingInterceptor.Logger {
         @Override
         public void log(String message) {
-            LogUtils.i("oklog: " + message);
+            LogUtils.i("LoggingInterceptor",message);
         }
     }
 

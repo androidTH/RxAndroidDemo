@@ -1,16 +1,28 @@
 package com.rxandroiddemo.base.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.rxandroiddemo.R;
+import com.rxandroiddemo.adapter.NewsListAdapter;
+import com.rxandroiddemo.base.contract.ElementMainContract;
+import com.rxandroiddemo.base.contract.NewsContract;
+import com.rxandroiddemo.base.model.ElementModel;
+import com.rxandroiddemo.base.presenter.ElementPresenter;
+import com.rxandroiddemo.base.presenter.NewsPresenterIm;
+import com.rxandroiddemo.bean.NewsSummary;
+import com.rxandroiddemo.bean.ZhuangbiImage;
+import com.rxandroiddemo.ui.EasyRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,26 +34,22 @@ import butterknife.OnCheckedChanged;
  * @Description
  */
 
-public class TokenFragment extends BaseFragment {
+public class TokenFragment extends BaseFragment<ElementPresenter,ElementModel> implements NewsContract.View,ElementMainContract.View{
 
-    @Bind(R.id.searchRb1)
-    AppCompatRadioButton searchRb1;
-    @Bind(R.id.searchRb2)
-    AppCompatRadioButton searchRb2;
-    @Bind(R.id.searchRb3)
-    AppCompatRadioButton searchRb3;
-    @Bind(R.id.searchRb4)
-    AppCompatRadioButton searchRb4;
-    @Bind(R.id.tipBt)
-    Button tipBt;
-    @Bind(R.id.gridRv)
-    RecyclerView gridRv;
-    @Bind(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
+
+    //http://c.m.163.com/nc/article/headline/T1348647909107/20-20.html
+    private static String TAG=TokenFragment.class.getSimpleName();
+
+    @Bind(R.id.recyclerview)
+    EasyRecyclerView mRecyclerview;
+
+    private List<NewsSummary> mNewsList=new ArrayList<>();
+    private NewsListAdapter mNewsListAdapter;
+    private NewsPresenterIm newsPresenterIm;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_elementary;
+        return R.layout.fragment_token;
     }
 
     @Override
@@ -56,12 +64,15 @@ public class TokenFragment extends BaseFragment {
 
     @Override
     public void attachView() {
-
+        newsPresenterIm = new NewsPresenterIm();
+        newsPresenterIm.attachView(this);
+        newsPresenterIm.loadNewsList("headline", "T1348647909107", 0);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
     public void initDatas() {
-
+//        mRecyclerview.setAdapter(mNewsListAdapter);
     }
 
     @Override
@@ -69,18 +80,10 @@ public class TokenFragment extends BaseFragment {
 
     }
 
-
-
-    @OnCheckedChanged({R.id.searchRb1,R.id.searchRb2,R.id.searchRb3,R.id.searchRb4})
-    public void onTagChecked(RadioButton searchRb, boolean checked){
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -88,5 +91,48 @@ public class TokenFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void getNewsList(List<NewsSummary> newsSummaryList) {
+        Log.i(TAG,"长度"+newsSummaryList.size());
+        mNewsList.addAll(newsSummaryList);
+        if(mNewsListAdapter==null){
+          mNewsListAdapter=new NewsListAdapter(getActivity(),mNewsList);
+          mRecyclerview.setAdapter(mNewsListAdapter);
+        }else{
+          mNewsListAdapter.addAll(mNewsList);
+        }
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
+    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
+
+    }
+
+    @Override
+    public void showLoading(String title) {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
+
+    @Override
+    public void showErrorTip(String msg) {
+
     }
 }

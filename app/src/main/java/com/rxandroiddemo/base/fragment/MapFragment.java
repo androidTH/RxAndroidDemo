@@ -15,7 +15,11 @@ import android.widget.Toast;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.ItemListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
+import com.rxandroiddemo.base.contract.ElementMainContract;
+import com.rxandroiddemo.base.model.ElementModel;
+import com.rxandroiddemo.base.presenter.ElementPresenter;
 import com.rxandroiddemo.bean.Item;
+import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.utils.Constant;
 
 import java.util.List;
@@ -35,7 +39,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class MapFragment extends BaseFragment {
+public class MapFragment extends BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
 
     private int page = 0;
 
@@ -69,7 +73,7 @@ public class MapFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this,mModel);
     }
 
     @Override
@@ -144,5 +148,25 @@ public class MapFragment extends BaseFragment {
         if(compositeSubscription.hasSubscriptions()){
             compositeSubscription.clear();
         }
+    }
+
+    @Override
+    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
+
+    }
+
+    @Override
+    public void showLoading(String title) {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
+
+    @Override
+    public void showErrorTip(String msg) {
+
     }
 }

@@ -13,6 +13,7 @@ import android.view.Window;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.utils.TUtil;
 import com.rxandroiddemo.utils.ToastUitl;
+import com.rxandroiddemo.utils.rxutils.RxManager;
 
 import butterknife.ButterKnife;
 
@@ -56,7 +57,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     public T mPresenter;
     public E mModel;
     public Context mContext;
-//    public RxManager mRxManager;
+    public RxManager mRxManager;
 
         @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -259,7 +260,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         super.onDestroy();
         if (mPresenter != null)
             mPresenter.onDestroy();
-//        mRxManager.clear();
+        mRxManager.clear();
         ButterKnife.unbind(this);
 //        AppManager.getAppManager().finishActivity(this);
     }

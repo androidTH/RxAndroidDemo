@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.ItemListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
+import com.rxandroiddemo.base.contract.ElementMainContract;
+import com.rxandroiddemo.base.model.ElementModel;
+import com.rxandroiddemo.base.presenter.ElementPresenter;
 import com.rxandroiddemo.bean.Item;
 import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.utils.Constant;
@@ -35,7 +38,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class ZipFragment extends BaseFragment {
+public class ZipFragment extends  BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
 
     @Bind(R.id.zipLoadBt)
     Button mZipLoadBt;
@@ -61,7 +64,7 @@ public class ZipFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this,mModel);
     }
 
     @Override
@@ -106,7 +109,6 @@ public class ZipFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -135,5 +137,25 @@ public class ZipFragment extends BaseFragment {
             mSwipeRefreshLayout.setRefreshing(false);
             mAdapter.setItems(items);
         }
+    }
+
+    @Override
+    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
+
+    }
+
+    @Override
+    public void showLoading(String title) {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
+
+    @Override
+    public void showErrorTip(String msg) {
+
     }
 }

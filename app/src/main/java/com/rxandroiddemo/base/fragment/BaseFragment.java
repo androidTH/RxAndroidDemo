@@ -52,7 +52,6 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
         return parentView;
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -129,12 +128,9 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
                 }
             }
         }
-
     }
 
     protected boolean isVisible(View view) {
         return view.getVisibility() == View.VISIBLE;
     }
-
-
 }
