@@ -43,6 +43,9 @@
                 android:id="@+id/news_summary_photo_iv_right"
                 style="@style/news_summary_photo_iv"
                 android:src="@mipmap/ic_launcher" />
+
+
+
         </LinearLayout>
 
         <TextView
