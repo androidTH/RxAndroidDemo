@@ -31,7 +31,7 @@ public class EasyRecyclerView extends FrameLayout {
     private Context mContext;
 
     public static final String TAG = "EasyRecyclerView";
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     protected RecyclerView mRecycler;
     protected TextView tipView;
     protected ViewGroup mProgressView;
@@ -377,7 +377,7 @@ public class EasyRecyclerView extends FrameLayout {
     private void hideAll() {
         mEmptyView.setVisibility(View.GONE);
         mProgressView.setVisibility(View.GONE);
-        mErrorView.setVisibility(GONE);
+        mErrorView.setVisibility(View.GONE);
 //        mPtrLayout.setRefreshing(false);
         mRecycler.setVisibility(View.INVISIBLE);
     }

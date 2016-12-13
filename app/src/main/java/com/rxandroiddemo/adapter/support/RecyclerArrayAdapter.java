@@ -568,7 +568,7 @@ public abstract  class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<Base
         Log.i("onBindViewHolder","position="+position+"i="+i+"Object="+mObjects.size());
         if (footers.size() != 0 && i >= 0) {
             Log.i("onBindViewHolder","i="+i);
-            footers.get(i).onBindView(holder.itemView);
+            footers.get(i).onBindView(holder.itemView);//这是调用加载更多的关键一步
             return;
         }
         OnBindViewHolder(holder, position - headers.size());

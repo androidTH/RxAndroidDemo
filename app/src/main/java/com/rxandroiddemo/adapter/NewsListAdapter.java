@@ -28,6 +28,10 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsSummary> {
     public static final int TYPE_ITEM = 0;
     public static final int TYPE_PHOTO_ITEM =1;
 
+    public NewsListAdapter(Context context) {
+        super(context);
+    }
+
     public NewsListAdapter(Context context,List<NewsSummary> newsSummaryList) {
         super(context,newsSummaryList);
     }

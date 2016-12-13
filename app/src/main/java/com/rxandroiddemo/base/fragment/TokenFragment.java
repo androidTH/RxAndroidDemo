@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.NewsListAdapter;
+import com.rxandroiddemo.adapter.support.OnLoadMoreListener;
 import com.rxandroiddemo.base.contract.ElementMainContract;
 import com.rxandroiddemo.base.contract.NewsContract;
 import com.rxandroiddemo.base.model.ElementModel;
@@ -20,6 +21,8 @@ import com.rxandroiddemo.base.presenter.NewsPresenterIm;
 import com.rxandroiddemo.bean.NewsSummary;
 import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.ui.EasyRecyclerView;
+import com.rxandroiddemo.ui.swipe.OnRefreshListener;
+import com.rxandroiddemo.utils.NetWorkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +37,18 @@ import butterknife.OnCheckedChanged;
  * @Description
  */
 
-public class TokenFragment extends BaseFragment<ElementPresenter,ElementModel> implements NewsContract.View,ElementMainContract.View{
+public class TokenFragment extends BaseFragment<ElementPresenter, ElementModel> implements NewsContract.View, ElementMainContract.View, OnLoadMoreListener {
 
 
     //http://c.m.163.com/nc/article/headline/T1348647909107/20-20.html
-    private static String TAG=TokenFragment.class.getSimpleName();
+    private static String TAG = TokenFragment.class.getSimpleName();
 
     @Bind(R.id.recyclerview)
     EasyRecyclerView mRecyclerview;
 
-    private List<NewsSummary> mNewsList=new ArrayList<>();
     private NewsListAdapter mNewsListAdapter;
     private NewsPresenterIm newsPresenterIm;
+    protected int start = 0;
 
     @Override
     public int getLayoutResId() {
@@ -66,13 +69,23 @@ public class TokenFragment extends BaseFragment<ElementPresenter,ElementModel> i
     public void attachView() {
         newsPresenterIm = new NewsPresenterIm();
         newsPresenterIm.attachView(this);
-        newsPresenterIm.loadNewsList("headline", "T1348647909107", 0);
+        newsPresenterIm.loadNewsList("headline", "T1348647909107", start);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
     public void initDatas() {
-//        mRecyclerview.setAdapter(mNewsListAdapter);
+        mNewsListAdapter = new NewsListAdapter(getActivity());
+        mRecyclerview.setAdapterWithProgress(mNewsListAdapter);
+        mRecyclerview.setRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                start = 0;
+                newsPresenterIm.loadNewsList("headline", "T1348647909107", start);
+            }
+        });
+        mNewsListAdapter.setMore(R.layout.common_more_view, this);
+        mNewsListAdapter.setNoMore(R.layout.common_nomore_view);
     }
 
     @Override
@@ -90,20 +103,17 @@ public class TokenFragment extends BaseFragment<ElementPresenter,ElementModel> i
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override
     public void getNewsList(List<NewsSummary> newsSummaryList) {
-        Log.i(TAG,"长度"+newsSummaryList.size());
-        mNewsList.addAll(newsSummaryList);
-        if(mNewsListAdapter==null){
-          mNewsListAdapter=new NewsListAdapter(getActivity(),mNewsList);
-          mRecyclerview.setAdapter(mNewsListAdapter);
-        }else{
-          mNewsListAdapter.addAll(mNewsList);
+        Log.i(TAG, "长度" + newsSummaryList.size());
+        start += 20;
+        if (start == 80) {
+            mNewsListAdapter.addAll(new ArrayList<NewsSummary>());
+        } else {
+            mNewsListAdapter.addAll(newsSummaryList);
         }
-
     }
 
     @Override
@@ -134,5 +144,13 @@ public class TokenFragment extends BaseFragment<ElementPresenter,ElementModel> i
     @Override
     public void showErrorTip(String msg) {
 
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (NetWorkUtils.isConnected(getApplicationContext())) {
+            Log.i(TAG, "onLoadMore" + start);
+            newsPresenterIm.loadNewsList("headline", "T1348647909107", start);
+        }
     }
 }
