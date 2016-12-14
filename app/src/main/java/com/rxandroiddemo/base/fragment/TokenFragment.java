@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.NewsListAdapter;
 import com.rxandroiddemo.adapter.support.OnLoadMoreListener;
+import com.rxandroiddemo.base.BaseRVFragment;
 import com.rxandroiddemo.base.contract.ElementMainContract;
 import com.rxandroiddemo.base.contract.NewsContract;
 import com.rxandroiddemo.base.model.ElementModel;
@@ -37,7 +38,7 @@ import butterknife.OnCheckedChanged;
  * @Description
  */
 
-public class TokenFragment extends BaseFragment<ElementPresenter, ElementModel> implements NewsContract.View, ElementMainContract.View, OnLoadMoreListener {
+public class TokenFragment extends BaseRVFragment implements NewsContract.View, OnLoadMoreListener {
 
 
     //http://c.m.163.com/nc/article/headline/T1348647909107/20-20.html
@@ -53,16 +54,6 @@ public class TokenFragment extends BaseFragment<ElementPresenter, ElementModel> 
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_token;
-    }
-
-    @Override
-    protected int getTitleRes() {
-        return R.string.title_token;
-    }
-
-    @Override
-    public void initPresenter() {
-
     }
 
     @Override
@@ -123,26 +114,6 @@ public class TokenFragment extends BaseFragment<ElementPresenter, ElementModel> 
 
     @Override
     public void complete() {
-
-    }
-
-    @Override
-    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
-
-    }
-
-    @Override
-    public void showLoading(String title) {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
-    }
-
-    @Override
-    public void showErrorTip(String msg) {
 
     }
 

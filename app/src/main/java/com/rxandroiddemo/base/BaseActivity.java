@@ -1,267 +1,246 @@
 package com.rxandroiddemo.base;
 
-
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.BuildConfig;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.rxandroiddemo.R;
-import com.rxandroiddemo.utils.TUtil;
-import com.rxandroiddemo.utils.ToastUitl;
-import com.rxandroiddemo.utils.rxutils.RxManager;
+import com.rxandroiddemo.utils.StatusBarCompat;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
-/**
- * 基类
- */
+public abstract class BaseActivity extends AppCompatActivity {
 
-/***************使用例子*********************/
-//1.mvp模式
-//public class SampleActivity extends BaseActivity<NewsChanelPresenter, NewsChannelModel>implements NewsChannelContract.View {
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_news_channel;
-//    }
-//
-//    @Override
-//    public void initPresenter() {
-//        mPresenter.setVM(this, mModel);
-//    }
-//
-//    @Override
-//    public void initView() {
-//    }
-//}
-//2.普通模式
-//public class SampleActivity extends BaseActivity {
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_news_channel;
-//    }
-//
-//    @Override
-//    public void initPresenter() {
-//    }
-//
-//    @Override
-//    public void initView() {
-//    }
-//}
-public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel> extends AppCompatActivity {
-    public T mPresenter;
-    public E mModel;
-    public Context mContext;
-    public RxManager mRxManager;
+    public Toolbar mCommonToolbar;
 
-        @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected Context mContext;
+    protected int statusBarColor = 0;
+    protected View statusBarView = null;
+    private int stateResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mRxManager=new RxManager();
-        doBeforeSetcontentView();
         setContentView(getLayoutId());
-        ButterKnife.bind(this);
+        stateResult=StatusBarLightMode(this);
+        if (statusBarColor == 0) {
+            statusBarView = StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        } else if (statusBarColor != -1) {
+            statusBarView = StatusBarCompat.compat(this, statusBarColor);
+        }
+        transparent19and20();
         mContext = this;
-        mPresenter = TUtil.getT(this, 0);
-        mModel=TUtil.getT(this,1);
-        if(mPresenter!=null){
-            mPresenter.mContext=this;
+        ButterKnife.bind(this);
+
+        mCommonToolbar = ButterKnife.findById(this, R.id.common_toolbar);
+        if (mCommonToolbar != null) {
+            initToolBar();
+            setSupportActionBar(mCommonToolbar);
         }
-        this.initPresenter();
-        this.initView();
+        initDatas();
+        configViews();
     }
 
-    /**
-     * 设置layout前配置
-     */
-    private void doBeforeSetcontentView() {
-        //设置昼夜主题
-//        initTheme();
-        // 把actvity放到application栈中管理
-//        AppManager.getAppManager().addActivity(this);
-        // 无标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 设置竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        // 默认着色状态栏
-//        SetStatusBarColor();
-
-    }
-    /*********************子类实现*****************************/
-    //获取布局文件
-    public abstract int getLayoutId();
-    //简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
-    public abstract void initPresenter();
-    //初始化view
-    public abstract void initView();
-
-
-    /**
-     * 设置主题
-     */
-//    private void initTheme() {
-//        ChangeModeController.setTheme(this, R.style.DayTheme, R.style.NightTheme);
-//    }
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-//    protected void SetStatusBarColor(){
-//        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this,R.color.main_color));
-//    }
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-//    protected void SetStatusBarColor(int color){
-//        StatusBarCompat.setStatusBarColor(this,color);
-//    }
-    /**
-     * 沉浸状态栏（4.4以上系统有效）
-     */
-//    protected void SetTranslanteBar(){
-//        StatusBarCompat.translucentStatusBar(this);
-//    }
-
-
-
-    /**
-     * 通过Class跳转界面
-     **/
-    public void startActivity(Class<?> cls) {
-        startActivity(cls, null);
-    }
-
-    /**
-     * 通过Class跳转界面
-     **/
-    public void startActivityForResult(Class<?> cls, int requestCode) {
-        startActivityForResult(cls, null, requestCode);
-    }
-
-    /**
-     * 含有Bundle通过Class跳转界面
-     **/
-    public void startActivityForResult(Class<?> cls, Bundle bundle,
-                                       int requestCode) {
-        Intent intent = new Intent();
-        intent.setClass(this, cls);
-        if (bundle != null) {
-            intent.putExtras(bundle);
+    protected void transparent19and20() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        startActivityForResult(intent, requestCode);
     }
 
-    /**
-     * 含有Bundle通过Class跳转界面
-     **/
-    public void startActivity(Class<?> cls, Bundle bundle) {
-        Intent intent = new Intent();
-        intent.setClass(this, cls);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        startActivity(intent);
-    }
-
-    /**
-     * 开启浮动加载进度条
-     */
-//    public void startProgressDialog() {
-//        LoadingDialog.showDialogForLoading(this);
-//    }
-
-    /**
-     * 开启浮动加载进度条
-     *
-     * @param msg
-     */
-//    public void startProgressDialog(String msg) {
-//        LoadingDialog.showDialogForLoading(this, msg, true);
-//    }
-
-    /**
-     * 停止浮动加载进度条
-     */
-//    public void stopProgressDialog() {
-//        LoadingDialog.cancelDialogForLoading();
-//    }
-
-    /**
-     * 短暂显示Toast提示(来自String)
-     **/
-    public void showShortToast(String text) {
-        ToastUitl.showShort(text);
-    }
-
-    /**
-     * 短暂显示Toast提示(id)
-     **/
-    public void showShortToast(int resId) {
-        ToastUitl.showShort(resId);
-    }
-
-    /**
-     * 长时间显示Toast提示(来自res)
-     **/
-    public void showLongToast(int resId) {
-        ToastUitl.showLong(resId);
-    }
-
-    /**
-     * 长时间显示Toast提示(来自String)
-     **/
-    public void showLongToast(String text) {
-        ToastUitl.showLong(text);
-    }
-    /**
-     * 带图片的toast
-     * @param text
-     * @param res
-     */
-    public void showToastWithImg(String text, int res) {
-        ToastUitl.showToastWithImg(text,res);
-    }
-    /**
-     * 网络访问错误提醒
-     */
-//    public void showNetErrorTip() {
-//        ToastUitl.showToastWithImg(getText(R.string.net_error).toString(),R.drawable.ic_wifi_off);
-//    }
-//    public void showNetErrorTip(String error) {
-//        ToastUitl.showToastWithImg(error,R.drawable.ic_wifi_off);
-//    }
     @Override
     protected void onResume() {
         super.onResume();
-        //debug版本不统计crash
-//        if(!BuildConfig.LOG_DEBUG) {
-//            //友盟统计
-//            MobclickAgent.onResume(this);
-//        }
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //debug版本不统计crash
-//        if(!BuildConfig.LOG_DEBUG) {
-//            //友盟统计
-//            MobclickAgent.onPause(this);
-//        }
-    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.onDestroy();
-        mRxManager.clear();
         ButterKnife.unbind(this);
-//        AppManager.getAppManager().finishActivity(this);
+        StatusBarDarkMode(this,stateResult);
+    }
+
+    public abstract int getLayoutId();
+
+    public abstract void initToolBar();
+
+    public abstract  void attachView();
+
+    public abstract void initDatas();
+
+    /**
+     * 对各种控件进行设置、适配、填充数据
+     */
+    public abstract void configViews();
+
+    protected void gone(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void visible(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+    }
+
+    protected boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void hideStatusBar() {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(attrs);
+        if(statusBarView != null){
+            statusBarView.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    protected void showStatusBar() {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(attrs);
+        if(statusBarView != null){
+            statusBarView.setBackgroundColor(statusBarColor);
+        }
+    }
+    public void editStateBarFontColor(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+    }
+
+    /**
+     * 设置状态栏图标为深色和魅族特定的文字风格，Flyme4.0以上
+     * 可以用来判断是否为Flyme用户
+     * @param window 需要设置的窗口
+     * @param dark 是否把状态栏字体及图标颜色设置为深色
+     * @return  boolean 成功执行返回true
+     *
+     */
+    public boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class
+                        .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class
+                        .getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 设置状态栏字体图标为深色，需要MIUIV6以上
+     * @param window 需要设置的窗口
+     * @param dark 是否把状态栏字体及图标颜色设置为深色
+     * @return  boolean 成功执行返回true
+     *
+     */
+    public boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            Class clazz = window.getClass();
+            try {
+                int darkModeFlag = 0;
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                if(dark){
+                    extraFlagField.invoke(window,darkModeFlag,darkModeFlag);//状态栏透明且黑色字体
+                }else{
+                    extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+                }
+                result=true;
+            }catch (Exception e){
+
+            }
+        }
+        return result;
+    }
+
+    /**
+     *设置状态栏黑色字体图标，
+     * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
+     * @param activity
+     * @return 1:MIUUI 2:Flyme 3:android6.0
+     */
+    public int StatusBarLightMode(Activity activity){
+        int result=0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if(MIUISetStatusBarLightMode(activity.getWindow(), true)){
+                result=1;
+            }else if(FlymeSetStatusBarLightMode(activity.getWindow(), true)){
+                result=2;
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                editStateBarFontColor();
+                result=3;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 应用退出时,清除MIUI或flyme或6.0以上版本状态栏黑色字体
+     */
+    public void StatusBarDarkMode(Activity activity, int type){
+        if(type==1){
+            MIUISetStatusBarLightMode(activity.getWindow(), false);
+        }else if(type==2){
+            FlymeSetStatusBarLightMode(activity.getWindow(), false);
+        }else if(type==3){
+            //非沉浸式
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        }
     }
 }

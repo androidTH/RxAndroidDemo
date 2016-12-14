@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ElementActivity extends AppCompatActivity implements ElementContract.View {
+public class ElementActivity extends BaseActivity implements ElementContract.View {
 
     private static String TAG=ElementActivity.class.getSimpleName();
 
@@ -47,11 +47,30 @@ public class ElementActivity extends AppCompatActivity implements ElementContrac
 
     public ZhuangbiListAdapter mAdapter = new ZhuangbiListAdapter();
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_element);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_element;
+    }
+
+    @Override
+    public void initToolBar() {
+      mCommonToolbar.setTitle("测试");
+    }
+
+    //进行Presenter的实例化
+    @Override
+    public void attachView() {
+
+    }
+
+    @Override
+    public void initDatas() {
+
+    }
+
+    @Override
+    public void configViews() {
         mSearchPresenter = new ElementSearchPresenter(MyApp.getsInstance());
         mSearchPresenter.attachView(this);
 
@@ -101,7 +120,6 @@ public class ElementActivity extends AppCompatActivity implements ElementContrac
     public void complete() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
     @Override
     protected void onDestroy() {
