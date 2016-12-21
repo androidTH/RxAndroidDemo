@@ -1,26 +1,19 @@
 package com.rxandroiddemo.base.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.NewsListAdapter;
 import com.rxandroiddemo.adapter.support.OnLoadMoreListener;
-import com.rxandroiddemo.base.BaseRVFragment;
-import com.rxandroiddemo.base.contract.ElementMainContract;
+import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.base.contract.NewsContract;
-import com.rxandroiddemo.base.model.ElementModel;
-import com.rxandroiddemo.base.presenter.ElementPresenter;
 import com.rxandroiddemo.base.presenter.NewsPresenterIm;
 import com.rxandroiddemo.bean.NewsSummary;
-import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.ui.EasyRecyclerView;
 import com.rxandroiddemo.ui.swipe.OnRefreshListener;
 import com.rxandroiddemo.utils.NetWorkUtils;
@@ -29,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 
 /**
  * @auther jjr
@@ -38,7 +29,7 @@ import butterknife.OnCheckedChanged;
  * @Description
  */
 
-public class TokenFragment extends BaseRVFragment implements NewsContract.View, OnLoadMoreListener {
+public class TokenFragment extends BaseFragment implements NewsContract.View, OnLoadMoreListener {
 
 
     //http://c.m.163.com/nc/article/headline/T1348647909107/20-20.html

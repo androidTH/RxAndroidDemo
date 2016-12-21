@@ -15,4 +15,8 @@
     <color name="common_bg">@color/white</color>
     <!--通用触摸背景色-->
     <color name="common_touch_bg">#E3E3E3</color>
+
+    <color name="color_F0F0F0">#FFF0F0F0</color>
+    <color name="color_FA7C20">#FA7C20</color>
+    <color name="light_808080">#808080</color>
 </resources>

@@ -19,6 +19,7 @@ import java.util.Date;
  *
  * @author jjr.
  * @date 16/4/9.
+ * LogReport: https://github.com/wenmingvs/LogReport
  */
 public class LogUtils {
     private static Boolean LOG_SWITCH = true; // 日志文件总开关

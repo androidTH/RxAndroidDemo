@@ -1,24 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tablayout="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context="com.rxandroiddemo.MainActivity">
 
-    <include layout="@layout/common_toolbar"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"/>
+
 
     <android.support.design.widget.TabLayout
         android:id="@android:id/tabs"
+        android:layout_below="@+id/common_toolbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:tabMode="scrollable" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
+        android:layout_below="@android:id/tabs"
+        android:layout_above="@+id/commontablayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fl_body"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_above="@+id/tab_layout"-->
+        <!--android:background="?attr/dayNightBackground"-->
+        <!--android:layout_height="match_parent"/>-->
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/commontablayout"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        tablayout:tl_indicator_height="0dp"
+        tablayout:tl_iconHeight="20dp"
+        tablayout:tl_iconWidth="20dp"
+        tablayout:tl_indicator_color="@color/color_F0F0F0"
+        tablayout:tl_textSelectColor="@color/color_FA7C20"
+        tablayout:tl_textUnselectColor="@color/light_808080"
+        tablayout:tl_textsize="11sp"
+        tablayout:tl_underline_height="0dp"/>
+</RelativeLayout>

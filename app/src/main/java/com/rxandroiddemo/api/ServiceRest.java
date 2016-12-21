@@ -104,7 +104,7 @@ public class ServiceRest {
      * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
      * (假如请求了服务器并在a时刻返回响应结果，则在max-age规定的秒数内，浏览器将不会发送对应的请求到服务器，数据由缓存直接返回)时则不会使用缓存而请求服务器
      */
-    private static final String CACHE_CONTROL_AGE = "max-age=0";
+    private static final String CACHE_CONTROL_AGE = "public,max-age=10";
     /**
      * 根据网络状况获取缓存的策略
      */

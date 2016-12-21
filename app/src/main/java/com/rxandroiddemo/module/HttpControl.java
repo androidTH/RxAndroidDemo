@@ -10,11 +10,13 @@ import com.rxandroiddemo.api.support.HeaderInterceptor;
 import com.rxandroiddemo.api.support.LoggingInterceptor;
 import com.rxandroiddemo.utils.LogUtils;
 
+import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
 /**
@@ -23,6 +25,10 @@ import okhttp3.OkHttpClient;
 public class HttpControl {
 
     private static volatile OkHttpClient clientSingleton;
+
+//    private static File cacheFile = new File(MyApp.getsInstance().getCacheDir(), "Test"); // /data/data/包名/cache
+    private static File cacheFile = new File(MyApp.getsInstance().getExternalCacheDir(), "Test"); // /sdcard/Android/data/包名/cache
+    private static Cache cacheData = new Cache(cacheFile, 1024 * 1024 * 10);
 
     public static OkHttpClient provideOkHttpClient() {
         LoggingInterceptor logging = new LoggingInterceptor(new MyLog());
@@ -35,6 +41,7 @@ public class HttpControl {
                 .connectTimeout(20 * 1000, TimeUnit.MILLISECONDS)
                 .readTimeout(20 * 1000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true) // 失败重发
+                .cache(cacheData)
                 .addInterceptor(new HeaderInterceptor())
                 .addInterceptor(logging)
                 .cookieJar(new JavaCookieJar(cookieHandler));

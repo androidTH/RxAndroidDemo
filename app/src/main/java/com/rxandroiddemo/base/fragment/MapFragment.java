@@ -15,22 +15,15 @@ import android.widget.Toast;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.ItemListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
-import com.rxandroiddemo.base.contract.ElementMainContract;
-import com.rxandroiddemo.base.model.ElementModel;
-import com.rxandroiddemo.base.presenter.ElementPresenter;
+import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.Item;
-import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.utils.Constant;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -39,7 +32,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class MapFragment extends BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
+public class MapFragment extends BaseFragment {
 
     private int page = 0;
 
@@ -63,17 +56,6 @@ public class MapFragment extends BaseFragment<ElementPresenter,ElementModel> imp
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_map;
-    }
-
-
-    @Override
-    protected int getTitleRes() {
-        return R.string.title_map;
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this,mModel);
     }
 
     @Override
@@ -148,25 +130,5 @@ public class MapFragment extends BaseFragment<ElementPresenter,ElementModel> imp
         if(compositeSubscription.hasSubscriptions()){
             compositeSubscription.clear();
         }
-    }
-
-    @Override
-    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
-
-    }
-
-    @Override
-    public void showLoading(String title) {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
-    }
-
-    @Override
-    public void showErrorTip(String msg) {
-
     }
 }

@@ -15,9 +15,8 @@ import android.widget.Toast;
 
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.ZhuangbiListAdapter;
-import com.rxandroiddemo.base.contract.ElementMainContract;
-import com.rxandroiddemo.base.model.ElementModel;
-import com.rxandroiddemo.base.presenter.ElementPresenter;
+import com.rxandroiddemo.api.ServiceRest;
+import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.utils.Constant;
 
@@ -33,7 +32,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class ElementaryFragment extends BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
+public class ElementaryFragment extends BaseFragment {
 
     private static final String TAG = ElementaryFragment.class.getSimpleName();
 
@@ -61,16 +60,6 @@ public class ElementaryFragment extends BaseFragment<ElementPresenter,ElementMod
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_elementary;
-    }
-
-    @Override
-    protected int getTitleRes() {
-        return R.string.title_elementary;
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this,mModel);
     }
 
     @Override
@@ -127,51 +116,27 @@ public class ElementaryFragment extends BaseFragment<ElementPresenter,ElementMod
     }
 
     public void search(String key) {
-        mPresenter.lodeMineChannelsRequest(key);
-//        compositeSubscription.add(ServiceRest.getInstance().search(key).subscribe(new SearchSub()));
+        compositeSubscription.add(ServiceRest.getInstance().search(key).subscribe(new SearchSub()));
     }
 
-//    public class SearchSub implements Observer<List<ZhuangbiImage>> {
-//
-//        @Override
-//        public void onCompleted() {
-//            mSwipeRefreshLayout.setRefreshing(false);
-//        }
-//
-//        @Override
-//        public void onError(Throwable e) {
-//            mSwipeRefreshLayout.setRefreshing(false);
-//            Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
-//        }
-//
-//        @Override
-//        public void onNext(List<ZhuangbiImage> zhuangbiImages) {
-//            //更新UI
-//            Log.i(TAG, "数据长度" + zhuangbiImages.size());
-//            mAdapter.setImages(zhuangbiImages);
-//        }
-//    }
+    public class SearchSub implements Observer<List<ZhuangbiImage>> {
 
-    @Override
-    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
-        Log.i(TAG, "数据长度" + zhuangbiImages.size());
-        mAdapter.setImages(zhuangbiImages);
-    }
+        @Override
+        public void onCompleted() {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
 
-    @Override
-    public void showLoading(String title) {
-        Toast.makeText(getActivity(),title, Toast.LENGTH_SHORT).show();
-        mSwipeRefreshLayout.setRefreshing(true);
-    }
+        @Override
+        public void onError(Throwable e) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
+        }
 
-    @Override
-    public void stopLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showErrorTip(String msg) {
-        mSwipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+        @Override
+        public void onNext(List<ZhuangbiImage> zhuangbiImages) {
+            //更新UI
+            Log.i(TAG, "数据长度" + zhuangbiImages.size());
+            mAdapter.setImages(zhuangbiImages);
+        }
     }
 }

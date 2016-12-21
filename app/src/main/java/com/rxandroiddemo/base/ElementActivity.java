@@ -1,8 +1,6 @@
 package com.rxandroiddemo.base;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +19,6 @@ import com.rxandroiddemo.utils.Constant;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class ElementActivity extends BaseActivity implements ElementContract.View {
 

@@ -10,12 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.rxandroiddemo.R;
-import com.rxandroiddemo.base.contract.ElementMainContract;
-import com.rxandroiddemo.base.model.ElementModel;
-import com.rxandroiddemo.base.presenter.ElementPresenter;
-import com.rxandroiddemo.bean.ZhuangbiImage;
-
-import java.util.List;
+import com.rxandroiddemo.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +21,7 @@ import butterknife.ButterKnife;
  * @Description
  */
 
-public class TokenAdvancedFragment extends  BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
+public class TokenAdvancedFragment extends BaseFragment {
 
     @Bind(R.id.searchRb1)
     AppCompatRadioButton searchRb1;
@@ -49,15 +44,10 @@ public class TokenAdvancedFragment extends  BaseFragment<ElementPresenter,Elemen
     }
 
 
-    @Override
-    protected int getTitleRes() {
-        return R.string.title_token_advanced;
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this,mModel);
-    }
+//    @Override
+//    protected int getTitleRes() {
+//        return R.string.title_token_advanced;
+//    }
 
     @Override
     public void attachView() {
@@ -86,25 +76,5 @@ public class TokenAdvancedFragment extends  BaseFragment<ElementPresenter,Elemen
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
-
-    }
-
-    @Override
-    public void showLoading(String title) {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
-    }
-
-    @Override
-    public void showErrorTip(String msg) {
-
     }
 }

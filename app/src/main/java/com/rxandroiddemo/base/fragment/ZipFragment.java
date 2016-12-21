@@ -1,6 +1,5 @@
 package com.rxandroiddemo.base.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,18 +13,14 @@ import android.widget.Toast;
 import com.rxandroiddemo.R;
 import com.rxandroiddemo.adapter.ItemListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
-import com.rxandroiddemo.base.contract.ElementMainContract;
-import com.rxandroiddemo.base.model.ElementModel;
-import com.rxandroiddemo.base.presenter.ElementPresenter;
+import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.Item;
 import com.rxandroiddemo.bean.ZhuangbiImage;
 import com.rxandroiddemo.utils.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
@@ -38,7 +33,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class ZipFragment extends  BaseFragment<ElementPresenter,ElementModel> implements ElementMainContract.View {
+public class ZipFragment extends BaseFragment {
 
     @Bind(R.id.zipLoadBt)
     Button mZipLoadBt;
@@ -57,15 +52,10 @@ public class ZipFragment extends  BaseFragment<ElementPresenter,ElementModel> im
         return R.layout.fragment_zip;
     }
 
-    @Override
-    protected int getTitleRes() {
-        return R.string.title_zip;
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this,mModel);
-    }
+//    @Override
+//    protected int getTitleRes() {
+//        return R.string.title_zip;
+//    }
 
     @Override
     public void attachView() {
@@ -137,25 +127,5 @@ public class ZipFragment extends  BaseFragment<ElementPresenter,ElementModel> im
             mSwipeRefreshLayout.setRefreshing(false);
             mAdapter.setItems(items);
         }
-    }
-
-    @Override
-    public void editUi(List<ZhuangbiImage> zhuangbiImages) {
-
-    }
-
-    @Override
-    public void showLoading(String title) {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
-    }
-
-    @Override
-    public void showErrorTip(String msg) {
-
     }
 }

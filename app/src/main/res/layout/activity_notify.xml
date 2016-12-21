@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_notify"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="com.rxandroiddemo.base.NotifyActivity">
+
+    <Button
+        android:id="@+id/btn01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="淘宝样式:普通类型通知(单行)" />
+
+    <Button
+        android:id="@+id/btn02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="网易新闻样式:普通类型通知(多行)" />
+
+    <Button
+        android:id="@+id/btn03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="微信消息样式:消息列表通知(含双图标)" />
+
+    <Button
+        android:id="@+id/btn04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="系统截图通知样式:含大图类型通知" />
+
+    <Button
+        android:id="@+id/btn05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="应用宝样式:自定义视图通知" />
+
+    <Button
+        android:id="@+id/btn06"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android系统更新样式:折叠式双按钮通知" />
+
+    <Button
+        android:id="@+id/btn07"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android系统下载样式:进度条通知" />
+
+    <Button
+        android:id="@+id/btn08"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Heads-up 样式:Android 5.0 新特性" />
+</LinearLayout>

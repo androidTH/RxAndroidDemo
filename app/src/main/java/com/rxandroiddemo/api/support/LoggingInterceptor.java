@@ -186,8 +186,7 @@ public final class LoggingInterceptor implements Interceptor {
                 logger.log("");
                 logger.log(buffer.readString(charset));
 
-                logger.log(
-                        "--> END " + request.method() + " (" + requestBody.contentLength() + "-byte body)");
+                logger.log("--> END " + request.method() + " (" + requestBody.contentLength() + "-byte body)");
             }
         }
 

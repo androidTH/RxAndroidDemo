@@ -2,20 +2,12 @@ package com.rxandroiddemo.base.presenter;
 
 import com.rxandroiddemo.api.ServiceRest;
 import com.rxandroiddemo.base.RxPresenter;
-import com.rxandroiddemo.base.contract.ElementContract;
 import com.rxandroiddemo.base.contract.NewsContract;
 import com.rxandroiddemo.bean.NewsSummary;
-import com.rxandroiddemo.utils.Constant;
-import com.rxandroiddemo.utils.TimeUtil;
 
 import java.util.List;
-import java.util.Map;
 
-import rx.Observable;
 import rx.Observer;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.subjects.Subject;
 
 /**
  * @auther jjr
