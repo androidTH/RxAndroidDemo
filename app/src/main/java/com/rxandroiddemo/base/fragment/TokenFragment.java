@@ -94,6 +94,7 @@ public class TokenFragment extends BaseFragment implements NewsContract.View, On
         if (start == 80) {
             mNewsListAdapter.addAll(new ArrayList<NewsSummary>());
         } else {
+            mRecyclerview.setRefreshing(false);
             mNewsListAdapter.addAll(newsSummaryList);
         }
     }

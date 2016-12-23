@@ -18,7 +18,7 @@ import com.rxandroiddemo.adapter.ZhuangbiListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
 import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.ZhuangbiImage;
-import com.rxandroiddemo.utils.Constant;
+import com.rxandroiddemo.utils.AppConstant;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class ElementaryFragment extends BaseFragment {
     @Override
     public void initDatas() {
         search(mSearchRb1.getText().toString());
-        mSwipeRefreshLayout.setColorSchemeColors(Constant.colors);
+        mSwipeRefreshLayout.setColorSchemeColors(AppConstant.colors);
         mGridRv.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mGridRv.setHasFixedSize(true);
         mSwipeRefreshLayout.setEnabled(false);

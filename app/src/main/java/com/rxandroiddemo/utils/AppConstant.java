@@ -7,7 +7,7 @@ import android.graphics.Color;
  * @author yuyh.
  * @date 16/8/5.
  */
-public class Constant {
+public class AppConstant {
 
     public static final String IMG_BASE_URL = "http://statics.zhuishushenqi.com/";
 
@@ -23,6 +23,8 @@ public class Constant {
     public static boolean mSwitch;
     // 房产id
     public static final String HOUSE_ID = "5YyX5Lqs";
+
+    public static final String HOME_CURRENT_TAB_POSITION="HOME_CURRENT_TAB_POSITION";
 
     public static int[] colors=new int[]{
             Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW

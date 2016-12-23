@@ -17,7 +17,7 @@ import com.rxandroiddemo.adapter.ItemListAdapter;
 import com.rxandroiddemo.api.ServiceRest;
 import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.Item;
-import com.rxandroiddemo.utils.Constant;
+import com.rxandroiddemo.utils.AppConstant;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class MapFragment extends BaseFragment {
 
     @Override
     public void attachView() {
-       mSwipeRefreshLayout.setColorSchemeColors(Constant.colors);
+       mSwipeRefreshLayout.setColorSchemeColors(AppConstant.colors);
        mGridRv.setLayoutManager(new GridLayoutManager(getActivity(),3));
        mGridRv.setHasFixedSize(true);
        mGridRv.setAdapter(mAdapter);

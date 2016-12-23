@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#146e6e</color>
+    <!--303F9F 00FFFFFF-->
+    <color name="colorPrimaryDark">#146e6e</color>
+    <color name="colorAccent">#3B90DF</color>
     <color name="black">#FF000000</color>
     <color name="toast_white">#ffffff</color>
     <color name="toast_stroke_gray">#99d4d4d4</color>
@@ -19,4 +20,10 @@
     <color name="color_F0F0F0">#FFF0F0F0</color>
     <color name="color_FA7C20">#FA7C20</color>
     <color name="light_808080">#808080</color>
+    <color name="color_dddddd">#DDDDDD</color>
+    <color name="common_212121">#212121</color>
+    <color name="common_727272">#727272</color>
+    <color name="common_B2B2B2">#B2B2B2</color>
+    <!--通用分割线细-->
+    <color name="common_divider_narrow_E3E3E3">#E3E3E3</color>
 </resources>

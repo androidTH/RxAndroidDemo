@@ -26,7 +26,10 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".base.ElementActivity" />
-        <activity android:name=".base.NotifyActivity"></activity>
+        <activity android:name=".base.NotifyActivity" />
+        <activity android:name=".base.HoverActivity" />
+        <activity android:name=".base.SettingActivity"></activity>
+        <activity android:name=".base.AndroidBugActivity"></activity>
     </application>
 
 </manifest>

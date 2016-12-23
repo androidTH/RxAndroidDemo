@@ -47,4 +47,8 @@
     <string name="net_error">网络访问错误，请稍后再试</string>
     <string name="transition_photos">transition_animation_news_photos</string>
     <string name="photo_collections">图集：%1$s</string>s
+    <string name="exit_tips">再按一次退出程序</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

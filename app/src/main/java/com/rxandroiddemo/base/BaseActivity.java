@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,7 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.rxandroiddemo.R;
-import com.rxandroiddemo.utils.StatusBarCompat;
+import com.rxandroiddemo.ui.statusutils.StatusBarUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,40 +25,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Toolbar mCommonToolbar;
 
     protected Context mContext;
-    protected int statusBarColor = 0;
-    protected View statusBarView = null;
     private int stateResult;
+    protected int mColor = Color.GRAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        stateResult=StatusBarLightMode(this);
-        if (statusBarColor == 0) {
-            statusBarView = StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        } else if (statusBarColor != -1) {
-            statusBarView = StatusBarCompat.compat(this, statusBarColor);
-        }
-        transparent19and20();
-        mContext = this;
         ButterKnife.bind(this);
+        stateResult=StatusBarLightMode(this);
+        mContext = this;
+        mColor=getResources().getColor(R.color.colorPrimary);
 
         mCommonToolbar = ButterKnife.findById(this, R.id.common_toolbar);
         if (mCommonToolbar != null) {
             initToolBar();
             setSupportActionBar(mCommonToolbar);
         }
-        initDatas();
+        attachView();
+        initDatas(savedInstanceState);
         configViews();
     }
 
-    protected void transparent19and20() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -75,17 +62,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract int getLayoutId();
 
-    public abstract void initToolBar();
 
     public abstract  void attachView();
 
-    public abstract void initDatas();
+    public abstract void initDatas(Bundle savedInstanceState);
 
     /**
      * 对各种控件进行设置、适配、填充数据
      */
     public abstract void configViews();
 
+    public void initToolBar(){
+       StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+    }
     protected void gone(final View... views) {
         if (views != null && views.length > 0) {
             for (View view : views) {
@@ -120,23 +109,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void hideStatusBar() {
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getWindow().setAttributes(attrs);
-        if(statusBarView != null){
-            statusBarView.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-
-    protected void showStatusBar() {
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getWindow().setAttributes(attrs);
-        if(statusBarView != null){
-            statusBarView.setBackgroundColor(statusBarColor);
-        }
-    }
     public void editStateBarFontColor(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

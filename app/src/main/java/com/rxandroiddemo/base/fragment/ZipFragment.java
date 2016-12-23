@@ -16,7 +16,7 @@ import com.rxandroiddemo.api.ServiceRest;
 import com.rxandroiddemo.base.BaseFragment;
 import com.rxandroiddemo.bean.Item;
 import com.rxandroiddemo.bean.ZhuangbiImage;
-import com.rxandroiddemo.utils.Constant;
+import com.rxandroiddemo.utils.AppConstant;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class ZipFragment extends BaseFragment {
     public void attachView() {
         mGridRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mGridRv.setAdapter(mAdapter);
-        mSwipeRefreshLayout.setColorSchemeColors(Constant.colors);
+        mSwipeRefreshLayout.setColorSchemeColors(AppConstant.colors);
         mSwipeRefreshLayout.setEnabled(false);
     }
 

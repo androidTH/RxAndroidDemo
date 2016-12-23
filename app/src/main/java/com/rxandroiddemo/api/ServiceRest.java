@@ -5,15 +5,13 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rxandroiddemo.MyApp;
-import com.rxandroiddemo.bean.GankBeautyResult;
 import com.rxandroiddemo.bean.Item;
 import com.rxandroiddemo.bean.NewsSummary;
 import com.rxandroiddemo.bean.ZhuangbiImage;
-import com.rxandroiddemo.utils.Constant;
 import com.rxandroiddemo.module.HttpControl;
+import com.rxandroiddemo.utils.AppConstant;
 import com.rxandroiddemo.utils.NetWorkUtils;
 import com.rxandroiddemo.utils.TimeUtil;
-import com.rxandroiddemo.utils.rxandroid.JobExecutor;
 import com.rxandroiddemo.utils.rxandroid.SchedulersCompat;
 import com.rxandroiddemo.utils.rxutils.GankBeautyResultToItemsMapper;
 
@@ -21,15 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.schedulers.Schedulers;
 
 /**
  * @auther jjr
@@ -69,7 +64,7 @@ public class ServiceRest {
 
     public ServiceRest() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_BASE_URL)
+                .baseUrl(AppConstant.API_BASE_URL)
                 .client(HttpControl.getInstance())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // 添加Rx适配器
                 .addConverterFactory(GsonConverterFactory.create()) // 添加Gson转换器
@@ -79,7 +74,7 @@ public class ServiceRest {
 
     public ServiceRest(String s) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_BASE_GANK_URL)
+                .baseUrl(AppConstant.API_BASE_GANK_URL)
                 .client(HttpControl.getInstance())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // 添加Rx适配器
                 .addConverterFactory(GsonConverterFactory.create()) // 添加Gson转换器
@@ -90,7 +85,7 @@ public class ServiceRest {
     public ServiceRest(String s,String t) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_BASE_163_URL)
+                .baseUrl(AppConstant.API_BASE_163_URL)
                 .client(HttpControl.getInstance())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // 添加Rx适配器
                 .addConverterFactory(GsonConverterFactory.create(gson)) // 添加Gson转换器
@@ -116,18 +111,18 @@ public class ServiceRest {
     }
 
     public Observable<List<Item>> getBeauties(int number, int page){
-        return service.getBeauties(number,page).timeout(Constant.TIME_OUT, TimeUnit.MILLISECONDS).map(GankBeautyResultToItemsMapper.getInstance()).compose(SchedulersCompat.<List<Item>>applyIoSchedulers());
+        return service.getBeauties(number,page).timeout(AppConstant.TIME_OUT, TimeUnit.MILLISECONDS).map(GankBeautyResultToItemsMapper.getInstance()).compose(SchedulersCompat.<List<Item>>applyIoSchedulers());
     }
 
     public Observable<List<ZhuangbiImage>> search(String q){
-        return service.search(q).timeout(Constant.TIME_OUT, TimeUnit.MILLISECONDS).compose(SchedulersCompat.<List<ZhuangbiImage>>applyIoSchedulers());
+        return service.search(q).timeout(AppConstant.TIME_OUT, TimeUnit.MILLISECONDS).compose(SchedulersCompat.<List<ZhuangbiImage>>applyIoSchedulers());
     }
 
     public Observable<List<NewsSummary>> getNewsListData(final String type, final String id, final int startPage) {
         return service.getNewsList(getCacheControl(),type,id,startPage).flatMap(new Func1<Map<String, List<NewsSummary>>, Observable<NewsSummary>>() {
             @Override
             public Observable<NewsSummary> call(Map<String, List<NewsSummary>> map) {
-                if (id.endsWith(Constant.HOUSE_ID)) {
+                if (id.endsWith(AppConstant.HOUSE_ID)) {
                     // 房产实际上针对地区的它的id与返回key不同
                     return Observable.from(map.get("北京"));
                 }

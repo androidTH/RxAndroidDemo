@@ -58,7 +58,7 @@ public class NotifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void initDatas() {
+    public void initDatas(Bundle savedInstanceState) {
        mBtn01.setOnClickListener(this);
        mBtn02.setOnClickListener(this);
        mBtn03.setOnClickListener(this);

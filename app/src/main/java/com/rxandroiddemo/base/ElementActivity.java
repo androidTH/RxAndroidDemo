@@ -1,5 +1,6 @@
 package com.rxandroiddemo.base;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +15,7 @@ import com.rxandroiddemo.adapter.ZhuangbiListAdapter;
 import com.rxandroiddemo.base.contract.ElementContract;
 import com.rxandroiddemo.base.presenter.ElementSearchPresenter;
 import com.rxandroiddemo.bean.ZhuangbiImage;
-import com.rxandroiddemo.utils.Constant;
+import com.rxandroiddemo.utils.AppConstant;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class ElementActivity extends BaseActivity implements ElementContract.Vie
     }
 
     @Override
-    public void initDatas() {
+    public void initDatas(Bundle savedInstanceState) {
 
     }
 
@@ -72,7 +73,7 @@ public class ElementActivity extends BaseActivity implements ElementContract.Vie
         mSearchPresenter.attachView(this);
 
         search(mSearchRb1.getText().toString());
-        mSwipeRefreshLayout.setColorSchemeColors(Constant.colors);
+        mSwipeRefreshLayout.setColorSchemeColors(AppConstant.colors);
         mGridRv.setLayoutManager(new GridLayoutManager(this, 3));
         mGridRv.setHasFixedSize(true);
         mSwipeRefreshLayout.setEnabled(false);
