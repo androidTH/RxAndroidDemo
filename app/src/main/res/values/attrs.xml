@@ -37,4 +37,15 @@
         <!-- 圆角矩形宽高相等,取较宽高中大值-->
         <attr name="mv_isWidthHeightEqual" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="SearchEditText">
+        <attr name="drawableStart" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ShowHidePasswordEditText">
+        <attr name="drawable_hide" format="integer" />
+        <attr name="drawable_show" format="integer" />
+        <attr name="monospace" format="boolean" />
+        <attr name="tint_color" format="color" />
+    </declare-styleable>
 </resources>

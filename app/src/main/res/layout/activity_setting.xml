@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context="com.rxandroiddemo.base.SettingActivity">
     <include
         layout="@layout/common_toolbar"/>
@@ -156,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="关于我们"
+                    android:text="关于我"
                     android:textColor="@color/common_212121" />
             </RelativeLayout>
 
@@ -212,8 +213,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-
                     android:text="2.0.1"
+                    android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/ic_next"
                     android:textColor="@color/common_727272" />
             </RelativeLayout>

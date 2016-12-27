@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -185,7 +186,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+           mDrawerLayout.closeDrawer(Gravity.LEFT);
+        }else if (event.getAction() == KeyEvent.ACTION_DOWN
                 && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
                 currentBackPressedTime = System.currentTimeMillis();

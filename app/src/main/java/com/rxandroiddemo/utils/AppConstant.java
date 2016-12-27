@@ -1,7 +1,12 @@
 package com.rxandroiddemo.utils;
 
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+
+import com.rxandroiddemo.R;
 
 /**
  * @author yuyh.
@@ -29,4 +34,36 @@ public class AppConstant {
     public static int[] colors=new int[]{
             Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW
     };
+
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+
+    public static String getVersion(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return context.getString(R.string.can_not_find_version_name);
+        }
+    }
+
+    /**
+     * @return 版本号
+     */
+    public static int getVersionCode(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            int version = info.versionCode;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

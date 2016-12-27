@@ -24,6 +24,8 @@
     <color name="common_212121">#212121</color>
     <color name="common_727272">#727272</color>
     <color name="common_B2B2B2">#B2B2B2</color>
+    <color name="linkText">#ECECEC</color>
+    <color name="color_FF5055">#FF5055</color>
     <!--通用分割线细-->
     <color name="common_divider_narrow_E3E3E3">#E3E3E3</color>
 </resources>

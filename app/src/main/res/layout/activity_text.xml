@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    tools:context="com.rxandroiddemo.base.activity.TextActivity">
+   <include layout="@layout/common_toolbar"/>
+   <com.rxandroiddemo.ui.text.ShowHidePasswordEditText
+       android:id="@+id/showhidepwd_edit"
+       android:layout_width="match_parent"
+       android:layout_height="40dp"
+       android:layout_marginTop="10dp"/>
+    <com.rxandroiddemo.ui.text.PasswordEditText
+        android:id="@+id/pwd_edit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"/>
+    <com.rxandroiddemo.ui.text.EmailAutoCompleteTextView
+        android:id="@+id/email_textview"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"/>
+    <com.rxandroiddemo.ui.text.SearchEditText
+        android:id="@+id/search_edit"
+        android:hint="请输入关键词"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"/>
+    <com.rxandroiddemo.ui.text.AdaptiveTextView
+        android:text="asfsdfsdfsfsfsdfsdfasfsdfdddddddddddddddd"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp" />
+    <com.rxandroiddemo.ui.text.ClearEditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
