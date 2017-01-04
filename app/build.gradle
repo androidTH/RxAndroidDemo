@@ -63,3 +63,35 @@ dependencies {
 //    compile project(':irecyclerview')
 //    compile project(':FlycoTabLayout_Lib')
 }
+
+
+//android.applicationVariants.all { variant ->
+//    task "fix${variant.name.capitalize()}MainDexClassList" << {
+//        logger.info "Fixing main dex keep file for $variant.name"
+//        File keepFile = new File("$buildDir/intermediates/multi-dex/$variant.buildType.name/maindexlist.txt")
+//
+//        keepFile.withWriterAppend { w ->
+//            // Get a reader for the input file
+//            w.append('\n')
+//            new File("${projectDir}/multidex.keep").withReader { r ->
+//                // And write data from the input into the output
+//                w << r << '\n'
+//            }
+//            logger.info "Updated main dex keep file for ${keepFile.getAbsolutePath()}\n$keepFile.text"
+//        }
+//    }
+//}
+//
+//tasks.whenTaskAdded { task ->
+//    android.applicationVariants.all { variant ->
+//        if (task.name == "create${variant.name.capitalize()}MainDexClassList") {
+//            task.finalizedBy "fix${variant.name.capitalize()}MainDexClassList"
+//        }
+//    }
+//}
+//
+//tasks.withType(com.android.build.gradle.tasks.Dex) {dexTask ->
+//    def command = [] as List
+//    command << '--minimal-main-dex'
+//    dexTask.setAdditionalParameters(command)
+//}

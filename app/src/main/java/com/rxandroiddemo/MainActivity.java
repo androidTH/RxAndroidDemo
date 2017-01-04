@@ -8,10 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -28,9 +30,12 @@ import com.rxandroiddemo.base.fragment.ZipFragment;
 import com.rxandroiddemo.bean.TabEntity;
 import com.rxandroiddemo.ui.statusutils.StatusBarUtil;
 import com.rxandroiddemo.utils.AppConstant;
+import com.rxandroiddemo.utils.LogUtils;
+import com.rxandroiddemo.utils.MultiDexUtils;
 import com.rxandroiddemo.utils.ToastUitl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -232,5 +237,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            final List externalClasses = new MultiDexUtils().getExternalDexClasses(this);
+            if(externalClasses != null) {
+                Log.i("MulitDexutils",externalClasses.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
