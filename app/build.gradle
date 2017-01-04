@@ -27,7 +27,10 @@ android {
                 dx.additionalParameters = []
             }
             dx.additionalParameters += '--multi-dex'
+            dx.additionalParameters += '--set-max-idx-number=10000'
             dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
+            //此项添加后第一个classes.dex文件只能包含-main-dex-list列表中class
+            dx.additionalParameters += '--minimal-main-dex'
         }
     }
 }

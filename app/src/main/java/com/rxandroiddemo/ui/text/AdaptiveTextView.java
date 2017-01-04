@@ -67,9 +67,7 @@ public class AdaptiveTextView extends TextView {
             }
             this.setTextSize(trySize);// 等同于this.getPaint().set(trySize*scaled);
         }
-    }
-
-    ;
+    };
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int before, int after) {

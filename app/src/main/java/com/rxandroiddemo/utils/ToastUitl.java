@@ -19,7 +19,6 @@ import com.rxandroiddemo.R;
  */
 public class ToastUitl {
 
-
     private static Toast toast;
     private static Toast toast2;
 
