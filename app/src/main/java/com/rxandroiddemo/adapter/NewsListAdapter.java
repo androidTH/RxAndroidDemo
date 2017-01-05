@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ import java.util.List;
  * @Description
  */
 
-public class NewsListAdapter extends RecyclerArrayAdapter<NewsSummary> {
+public class NewsListAdapter extends RecyclerArrayAdapter<NewsSummary> implements Filterable{
 
     public static final int TYPE_ITEM = 0;
     public static final int TYPE_PHOTO_ITEM =1;
@@ -152,6 +154,24 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsSummary> {
             holder.setImageUrl(R.id.news_summary_photo_iv_right,imgSrcRight);
         } else {
             holder.setVisible(R.id.news_summary_photo_iv_right,false);
+        }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new TestFilter();
+    }
+
+    public class TestFilter extends Filter{
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results=new FilterResults();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+               notifyDataSetChanged();
         }
     }
 }

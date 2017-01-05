@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Description
  */
 
-public class MapFragment extends BaseFragment {
+public class MapFragment extends BaseFragment implements SearchView.OnQueryTextListener{
 
     private int page = 0;
 
@@ -52,6 +53,7 @@ public class MapFragment extends BaseFragment {
     ItemListAdapter mAdapter = new ItemListAdapter();
 
     private CompositeSubscription compositeSubscription=new CompositeSubscription();
+    private SearchView mSearchView;
 
     @Override
     public int getLayoutResId() {
@@ -64,6 +66,9 @@ public class MapFragment extends BaseFragment {
        mGridRv.setLayoutManager(new GridLayoutManager(getActivity(),3));
        mGridRv.setHasFixedSize(true);
        mGridRv.setAdapter(mAdapter);
+       if(mSearchView!=null){
+        mSearchView.setOnQueryTextListener(this);
+       }
     }
 
     @Override
@@ -130,5 +135,15 @@ public class MapFragment extends BaseFragment {
         if(compositeSubscription.hasSubscriptions()){
             compositeSubscription.clear();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }
