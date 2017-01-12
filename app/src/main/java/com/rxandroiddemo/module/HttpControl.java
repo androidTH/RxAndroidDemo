@@ -41,14 +41,6 @@ import okhttp3.internal.Platform;
 public class HttpControl {
 
     private static volatile OkHttpClient clientSingleton;
-    private static boolean trustAllSll = false;
-    private static String httpsCer="";
-
-    @Deprecated
-    public static void trustAllSll(){
-        trustAllSll = true;
-    }
-
 //    private static File cacheFile = new File(MyApp.getsInstance().getCacheDir(), "Test"); // /data/data/包名/cache
     private static File cacheFile = new File(MyApp.getsInstance().getExternalCacheDir(), "Test"); // /sdcard/Android/data/包名/cache
     private static Cache cacheData = new Cache(cacheFile, 1024 * 1024 * 10);
