@@ -15,8 +15,7 @@ import okhttp3.Response;
 
 /**
  * Retrofit2 Cookie拦截器。用于保存和设置Cookies
- *
- * @author yuyh.
+ * 添加相同的头文件
  * @date 16/8/6.
  */
 public final class HeaderInterceptor implements Interceptor {
