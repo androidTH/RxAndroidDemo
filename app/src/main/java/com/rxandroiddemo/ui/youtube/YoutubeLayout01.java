@@ -134,12 +134,12 @@ public class YoutubeLayout01 extends ViewGroup {
 
 //            Log.i(TAG, "onViewPositionChanged:" + "mDragOffset:" + mDragOffset);
 
-//            mHeaderView.setPivotX(mHeaderView.getWidth());
-//            mHeaderView.setPivotY(mHeaderView.getHeight());
-//            mHeaderView.setScaleX(1 - mDragOffset / 2);
-//            mHeaderView.setScaleY(1 - mDragOffset / 2);
+            mHeaderView.setPivotX(mHeaderView.getWidth());
+            mHeaderView.setPivotY(mHeaderView.getHeight());
+            mHeaderView.setScaleX(1 - mDragOffset / 2);
+            mHeaderView.setScaleY(1 - mDragOffset / 2);
 
-//            mDescView.setAlpha(1 - mDragOffset);
+            mDescView.setAlpha(1 - mDragOffset);
 
             requestLayout();
         }
