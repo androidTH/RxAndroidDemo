@@ -15,6 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="TINKER_ID"
+            android:value="tinker_id_6235657" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/starStyle">

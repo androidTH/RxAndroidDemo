@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.rxandroiddemo"
         minSdkVersion 19
@@ -12,9 +12,37 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("keystore.jks")
+                storePassword "rxdemo"
+                keyAlias "rxdemo"
+                keyPassword "rxdemo"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true  //开启minifyEnabled混淆代码 可以减小app的大小
+            shrinkResources true //可以去除无用资源
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -60,6 +88,10 @@ dependencies {
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
     compile 'com.r0adkll:slidableactivity:2.0.5'
     compile project(":FlycoDialog_Lib")
+    //可选，用于生成application类
+    provided('com.tencent.tinker:tinker-android-anno:1.7.7')
+    //tinker的核心库
+    compile('com.tencent.tinker:tinker-android-lib:1.7.7')
 //    compile project(':irecyclerview')
 //    compile project(':FlycoTabLayout_Lib')
 }
